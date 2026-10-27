@@ -32,12 +32,19 @@ jobs:
       - name: Build Windows x64 installer
         shell: pwsh
         run: |
-          & ./desktop/build-windows.ps1 *> windows-build.log
-          $buildExit = $LASTEXITCODE
+          $buildExit = 0
+          try {
+            & ./desktop/build-windows.ps1 *> windows-build.log
+            $buildExit = $LASTEXITCODE
+          } catch {
+            $buildExit = 1
+            $_.ToString() | Add-Content windows-build.log
+          }
           Get-Content windows-build.log | Write-Output
           if ($buildExit -ne 0) {
             $details = (Get-Content windows-build.log -Tail 100 | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_.Length -lt 1800 -and $_ -notmatch '^Command line defined|^•' } | Select-Object -Last 20) -join "`n"
             $details = $details.Replace('%','%25').Replace("`r",'%0D').Replace("`n",'%0A')
+            if ($details.Length -gt 3800) { $details = $details.Substring($details.Length - 3800) }
             Write-Output "::error::$details"
             exit $buildExit
           }

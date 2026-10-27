@@ -1,0 +1,17 @@
+Windows 10/11 x64: no Node installer needed.
+
+1. Download the full official runtime:
+https://nodejs.org/dist/v24.22.1/node-v24.22.1-win-x64.zip
+2. Right-click the ZIP, choose Extract All.
+3. Move the extracted node-v24.22.1-win-x64 folder into this project.
+   START-WINDOWS.bat and node-v24.22.1-win-x64 must be next to each other.
+4. Double-click START-WINDOWS.bat. Keep its window open.
+5. Wait for Ready. Open http://localhost:3000/intelligence.
+
+A lone node.exe is not enough; npm.cmd and the runtime's node_modules folder must remain inside the portable Node folder.
+Do not copy the runtime contents into the project root: npm ci replaces the project node_modules folder.
+The first run downloads project dependencies. No administrator permission is normally required.
+Windows 10/11 x64 is required for this package; Windows ARM/32-bit needs a matching runtime.
+
+Official SHA-256 from https://nodejs.org/dist/v24.22.1/SHASUMS256.txt:
+d2046d28c2c3dcd211ac5145c0bf30e2047ef9dfb306693c8c6e2eccd8b95fa5

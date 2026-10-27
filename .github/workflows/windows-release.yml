@@ -36,10 +36,9 @@ jobs:
           $buildExit = $LASTEXITCODE
           Get-Content windows-build.log | Write-Output
           if ($buildExit -ne 0) {
-            Get-Content windows-build.log -Tail 65 | ForEach-Object {
-              $line = $_.Replace('%','%25').Replace("`r",'%0D').Replace("`n",'%0A')
-              Write-Output "::error::$line"
-            }
+            $details = (Get-Content windows-build.log -Tail 100 | Where-Object { $_ -match 'warning|Error:|failed|File:|Processing script|macro|Script' } | Select-Object -Last 16) -join "`n"
+            $details = $details.Replace('%','%25').Replace("`r",'%0D').Replace("`n",'%0A')
+            Write-Output "::error::$details"
             exit $buildExit
           }
         env:

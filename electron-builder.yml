@@ -32,6 +32,7 @@ win:
 nsis:
   script: desktop/installer.nsi
   installerLanguages: [en_US, zh_CN]
+  differentialPackage: false
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true

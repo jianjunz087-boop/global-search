@@ -32,11 +32,11 @@ jobs:
       - name: Build Windows x64 installer
         shell: pwsh
         run: |
-          npx electron-builder --win --x64 *> windows-build.log
+          & ./desktop/build-windows.ps1 *> windows-build.log
           $buildExit = $LASTEXITCODE
           Get-Content windows-build.log | Write-Output
           if ($buildExit -ne 0) {
-            $details = (Get-Content windows-build.log -Tail 100 | Where-Object { $_ -match 'warning|Error:|failed|File:|Processing script|macro|Script' } | Select-Object -Last 16) -join "`n"
+            $details = (Get-Content windows-build.log -Tail 100 | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_.Length -lt 1800 -and $_ -notmatch '^Command line defined|^•' } | Select-Object -Last 20) -join "`n"
             $details = $details.Replace('%','%25').Replace("`r",'%0D').Replace("`n",'%0A')
             Write-Output "::error::$details"
             exit $buildExit

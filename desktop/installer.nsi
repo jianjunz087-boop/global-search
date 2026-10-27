@@ -1,10 +1,15 @@
 Unicode true
 !ifndef APP_VERSION
-  !define APP_VERSION "1.0.1"
+  !define APP_VERSION "1.0.3"
 !endif
 !include "MUI2.nsh"
 !include "x64.nsh"
-Name "BAIHUA AI TRADE"
+!include "StrFunc.nsh"
+${StrStr}
+Name "BAIHUA AI TRADE ${APP_VERSION}"
+VIProductVersion "${APP_VERSION}.0"
+VIAddVersionKey "ProductName" "BAIHUA AI TRADE"
+VIAddVersionKey "ProductVersion" "${APP_VERSION}"
 InstallDir "$LOCALAPPDATA\Programs\BAIHUA AI TRADE"
 InstallDirRegKey HKCU "Software\BAIHUA AI TRADE" "InstallDir"
 RequestExecutionLevel user
@@ -21,6 +26,14 @@ SetCompressor /SOLID lzma
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "SimpChinese"
 Function .onInit
+  nsExec::ExecToStack '"$SYSDIR\tasklist.exe" /FI "IMAGENAME eq BAIHUA AI TRADE.exe" /FO CSV /NH'
+  Pop $0
+  Pop $1
+  ${StrStr} $2 $1 "BAIHUA AI TRADE.exe"
+  ${If} $2 != ""
+    MessageBox MB_OK "Please exit BAIHUA AI TRADE completely before installing. 请先完全退出旧版应用，再运行安装程序。"
+    Abort
+  ${EndIf}
   ${IfNot} ${RunningX64}
     MessageBox MB_OK "This package requires 64-bit Windows 10 or 11."
     Abort

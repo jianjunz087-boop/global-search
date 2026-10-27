@@ -1,0 +1,10 @@
+'use client';
+import {useState} from 'react';
+import {Globe2,X} from 'lucide-react';
+import {countries} from '../lib/countries';
+export function CountryPicker({value,onChange,zh}:{value:string;onChange:(value:string)=>void;zh:boolean}){
+ const [open,setOpen]=useState(false),[query,setQuery]=useState('');
+ const matches=countries.filter(c=>[c.name,c.zh,c.code].some(s=>s.toLowerCase().includes(query.trim().toLowerCase())));
+ const tr=(en:string,cn:string)=>zh?cn:en;
+ return <div className="country-picker"><label><span>{tr('Target country','目标国家')} · {countries.length} {tr('countries & territories','个国家和地区')}</span><div className="input-wrap"><Globe2 size={16}/><select aria-label="Target country" value={value} onChange={e=>{onChange(e.target.value);setOpen(false)}}><option value="">{tr('All countries','全部国家')}</option>{countries.map(c=><option key={c.code} value={c.name}>{zh?c.zh:c.name} · {c.code}</option>)}</select></div></label><input className="country-lookup" aria-label="Find country" placeholder={tr('Find country by Chinese, English or code','输入中文、英文或国家代码查找')} value={query} onFocus={()=>setOpen(true)} onChange={e=>{setQuery(e.target.value);setOpen(true)}}/><button className="country-directory-button" type="button" onClick={()=>{setQuery('');setOpen(true)}}>{tr(`Browse all ${countries.length} countries & territories`,`查看全部 ${countries.length} 个国家和地区`)}</button>{open&&<div className="country-directory" data-testid="country-directory"><div className="country-directory-heading"><strong>{tr(`${matches.length} / ${countries.length} countries & territories`,`${matches.length} / ${countries.length} 个国家和地区`)}</strong><button type="button" aria-label="Close country list" onClick={()=>setOpen(false)}><X size={16}/></button></div><div className="country-directory-list">{matches.map(c=><button type="button" key={c.code} onClick={()=>{onChange(c.name);setQuery('');setOpen(false)}}><b>{c.zh}</b><span>{c.name} · {c.code}</span></button>)}{!matches.length&&<p>{tr('No country matches. Clear your search to see all 250.','未找到匹配项，清除输入可查看全部 250 项。')}</p>}</div></div>}</div>
+}

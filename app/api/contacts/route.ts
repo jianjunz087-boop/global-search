@@ -13,8 +13,8 @@ export async function POST(req:Request){
   if(!response.ok)return Response.json({code:[401,403].includes(response.status)?'INVALID_API_KEY':[402,429].includes(response.status)?'QUOTA_EXCEEDED':'PROVIDER_ERROR'},{status:502});
   const data=await response.json();if(data.error)return Response.json({code:/key|unauthori/i.test(String(data.error))?'INVALID_API_KEY':/quota|limit|credit|searches|run out/i.test(String(data.error))?'QUOTA_EXCEEDED':'PROVIDER_ERROR'},{status:502});
   const contact=extractWhatsApp(data.organic_results,lead.website);
-  if(!contact)return Response.json({found:false});
-  const saved=await db.query('UPDATE leads SET data=data || $2::jsonb WHERE id=$1 RETURNING data',[lead.id,JSON.stringify(contact)]);
+  if(!contact){await db.query('UPDATE leads SET data=data || $2::jsonb WHERE id=$1',[lead.id,JSON.stringify({whatsappCheckedAt:new Date().toISOString()})]);return Response.json({found:false});}
+  const saved=await db.query('UPDATE leads SET data=data || $2::jsonb WHERE id=$1 RETURNING data',[lead.id,JSON.stringify({...contact,whatsappCheckedAt:new Date().toISOString()})]);
   return Response.json({found:true,lead:saved.rows[0].data});
  }catch{return Response.json({code:'DATABASE_ERROR'},{status:503})}
 }

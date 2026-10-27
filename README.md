@@ -53,3 +53,11 @@ Open an unverified real customer's details and choose **Find public WhatsApp / æ
 A successful lookup stores `whatsapp` and `whatsappSource` in the existing JSONB record while preserving CRM fields. The source is clickable in customer details and included in Excel exports. An empty lookup leaves previously saved contact information intact and explains that absence from search results does not prove absence of WhatsApp. Search uses the customer's own API quota; no provider credentials are included in the installer. Live account verification is not claimed by fixture tests.
 
 The darker search page also displays the exact 250-country/territory total, offers a Show all action to clear country lookup text, and displays the app version in its footer.
+
+## 1.0.3 pagination and installed-application validation
+
+Real discovery now uses provider pagination (`start=(page-1)*10`) and enables Next only when SerpAPI returns a next-page link. Previous/Next retain the submitted keyword, country and business type; editing an input does not silently change a page request. Each page request uses account quota. Demo and CRM lists paginate locally, ten rows per page; selection applies to the visible page, and an unselected Excel export includes all filtered stored records.
+
+The country selector always contains all 250 countries and territories plus All countries. A separate browsable directory filters names in Chinese, English or by code. The whole workspace now uses dark green surfaces, with a prominent version marker and release banner. The WhatsApp column offers lookup directly in the list, distinguishes unchecked records and checked records with no public number, and links to the number's official source. Primary organic-result snippets can also supply explicitly labeled international WhatsApp numbers.
+
+The legacy local 1.0.0 installer streaming path has been removed. The in-app download page redirects to the live public download page. Windows release CI now runs the actual NSIS installer and launches its installed executable to check version, computed theme color, all 250 countries, local pagination, CRM persistence, and synthetic public-contact UI handling before publishing. This verifies packaging, not live SerpAPI account access.

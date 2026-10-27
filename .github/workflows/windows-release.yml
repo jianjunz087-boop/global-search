@@ -67,6 +67,33 @@ jobs:
           }
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Install and verify the actual Windows installer
+        shell: pwsh
+        run: |
+          $installDir = Join-Path $env:RUNNER_TEMP 'baihua-installed'
+          $installer = Join-Path $pwd "dist/windows/$env:INSTALLER_NAME"
+          $process = Start-Process -FilePath $installer -ArgumentList "/S /D=$installDir" -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Installer failed: $($process.ExitCode)" }
+          $env:DESKTOP_EXECUTABLE = Join-Path $installDir 'BAIHUA AI TRADE.exe'
+          if (!(Test-Path $env:DESKTOP_EXECUTABLE)) { throw 'Installed executable missing' }
+          & node tests/desktop-smoke.cjs *> installed-smoke.log
+          $smokeExit = $LASTEXITCODE
+          Get-Content installed-smoke.log | Write-Output
+          if ($smokeExit -ne 0) {
+            $details = (Get-Content installed-smoke.log -Tail 35) -join "`n"
+            $details = $details.Replace('%','%25').Replace("`r",'%0D').Replace("`n",'%0A')
+            if ($details.Length -gt 3800) { $details = $details.Substring($details.Length - 3800) }
+            Write-Output "::error::$details"
+            exit $smokeExit
+          }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Windows-installed-validation
+          path: |
+            desktop-installed.png
+            installed-smoke.log
+          if-no-files-found: ignore
       - name: Create checksums
         shell: pwsh
         run: |

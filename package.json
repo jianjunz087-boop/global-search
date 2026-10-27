@@ -1,0 +1,50 @@
+{
+  "name": "global-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev --hostname 0.0.0.0",
+    "build": "next build",
+    "start": "next start --hostname 0.0.0.0",
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "desktop:build": "npm run build && node desktop/prepare.mjs && electron-builder --win --x64",
+    "desktop:dev": "electron desktop"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jianjunz087-boop/global-search.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/jianjunz087-boop/global-search/issues"
+  },
+  "homepage": "https://github.com/jianjunz087-boop/global-search#readme",
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.12",
+    "exceljs": "^4.4.0",
+    "lucide-react": "^1.61.0",
+    "next": "^16.4.3",
+    "pg": "^8.23.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "overrides": {
+    "uuid": "11.1.1"
+  }
+}

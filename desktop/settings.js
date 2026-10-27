@@ -1,0 +1,1 @@
+document.querySelector('#save').onclick=async()=>{try{await window.desktop.saveSearchKey(document.querySelector('#key').value)}catch{document.querySelector('#error').textContent='无法保存，请检查密钥和系统凭据存储。 / Unable to save key.'}};

@@ -1,0 +1,39 @@
+appId: com.baihua.aitrade
+productName: BAIHUA AI TRADE
+directories:
+  app: desktop
+  output: dist/windows
+files:
+  - main.cjs
+  - preload.cjs
+  - settings.html
+  - settings.js
+  - package.json
+  - "!node_modules/**/*"
+extraResources:
+  - from: desktop-runtime
+    to: server
+    filter:
+      - '**/*'
+      - '!**/.env*'
+      - '!**/*.map'
+  - from: desktop-runtime/node_modules
+    to: server/node_modules
+    filter:
+      - '**/*'
+      - '!**/*.map'
+asar: true
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  signAndEditExecutable: false
+  artifactName: BAIHUA-AI-TRADE-Setup-${version}-win-x64.${ext}
+nsis:
+  script: desktop/installer.nsi
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  deleteAppDataOnUninstall: false

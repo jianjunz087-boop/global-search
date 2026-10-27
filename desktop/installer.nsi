@@ -1,4 +1,7 @@
 Unicode true
+!ifndef APP_VERSION
+  !define APP_VERSION "1.0.1"
+!endif
 !include "MUI2.nsh"
 !include "x64.nsh"
 Name "BAIHUA AI TRADE"
@@ -37,7 +40,7 @@ Section "Install"
   CreateShortcut "$DESKTOP\BAIHUA AI TRADE.lnk" "$INSTDIR\BAIHUA AI TRADE.exe"
   WriteRegStr HKCU "Software\BAIHUA AI TRADE" "InstallDir" "$INSTDIR"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\BAIHUA AI TRADE" "DisplayName" "BAIHUA AI TRADE"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\BAIHUA AI TRADE" "DisplayVersion" "1.0.0"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\BAIHUA AI TRADE" "DisplayVersion" "${APP_VERSION}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\BAIHUA AI TRADE" "UninstallString" '$\"$INSTDIR\Uninstall.exe$\"'
   WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\BAIHUA AI TRADE" "NoModify" 1
   WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\BAIHUA AI TRADE" "NoRepair" 1

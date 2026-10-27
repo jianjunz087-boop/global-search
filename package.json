@@ -1,6 +1,6 @@
 {
   "name": "global-search",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,7 @@
   "dependencies": {
     "@electric-sql/pglite": "^0.5.12",
     "exceljs": "^4.4.0",
+    "i18n-iso-countries": "^7.14.0",
     "lucide-react": "^1.61.0",
     "next": "^16.4.3",
     "pg": "^8.23.1",

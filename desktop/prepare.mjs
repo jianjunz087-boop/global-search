@@ -4,7 +4,7 @@ fs.rmSync(path.join(root,'.env.local'),{force:true});fs.rmSync(path.join(root,'.
 fs.cpSync('.next/static',path.join(root,'.next/static'),{recursive:true});
 // Never distribute environment credentials or build-machine state.
 for(const p of fs.readdirSync(root))if(p.startsWith('.env'))fs.rmSync(path.join(root,p),{force:true});
-fs.writeFileSync('desktop/package.json',JSON.stringify({name:'baihua-ai-trade',productName:'BAIHUA AI TRADE',version:'1.0.0',description:'Bilingual eyelash trade prospecting and CRM desktop demo',author:'BAIHUA AI TRADE',main:'main.cjs'},null,2));
+fs.writeFileSync('desktop/package.json',JSON.stringify({name:'baihua-ai-trade',productName:'BAIHUA AI TRADE',version:JSON.parse(fs.readFileSync('package.json','utf8')).version,description:'Bilingual eyelash trade prospecting and CRM desktop demo',author:'BAIHUA AI TRADE',main:'main.cjs'},null,2));
 // Resolve Linux build-time symlinks before shipping to Windows.
 fs.rmSync('desktop-runtime',{recursive:true,force:true});
 fs.cpSync(root,'desktop-runtime',{recursive:true,dereference:true});

@@ -9,8 +9,9 @@ if (!(Test-Path $nsis)) {
   if ($LASTEXITCODE -ne 0) { throw 'Verified NSIS installation failed' }
 }
 if (!(Test-Path $nsis)) { throw 'NSIS compiler not found' }
-$output = Join-Path $projectRoot 'dist/windows/BAIHUA-AI-TRADE-Setup-1.0.0-win-x64.exe'
+$version = (Get-Content (Join-Path $projectRoot 'package.json') | ConvertFrom-Json).version
+$output = Join-Path $projectRoot "dist/windows/BAIHUA-AI-TRADE-Setup-$version-win-x64.exe"
 $script = Join-Path $PSScriptRoot 'installer.nsi'
-& $nsis '/V2' "/DPROJECT_DIR=$projectRoot" "/XOutFile $output" $script
+& $nsis '/V2' "/DPROJECT_DIR=$projectRoot" "/XOutFile $output" "/DAPP_VERSION=$version" $script
 if ($LASTEXITCODE -ne 0) { throw 'NSIS installer compilation failed' }
 if (!(Test-Path $output)) { throw 'Installer missing' }

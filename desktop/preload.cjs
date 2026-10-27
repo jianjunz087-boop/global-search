@@ -1,1 +1,1 @@
-const {contextBridge,ipcRenderer}=require('electron');contextBridge.exposeInMainWorld('desktop',{saveSearchKey:key=>ipcRenderer.invoke('save-search-key',key)});
+const {contextBridge,ipcRenderer}=require('electron');contextBridge.exposeInMainWorld('desktop',{configureSearch:()=>ipcRenderer.invoke('open-search-settings'),saveSearchKey:key=>ipcRenderer.invoke('save-search-key',key)});

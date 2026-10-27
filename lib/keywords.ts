@@ -1,0 +1,1 @@
+export function normalizeKeyword(text:string){let result=text.trim();for(const [cn,en] of [['假睫毛','false eyelashes'],['睫毛','eyelashes'],['批发商','wholesaler'],['批发','wholesale'],['进口商','importer'],['经销商','distributor'],['品牌方','brand'],['品牌','brand'],['定制','private label']])result=result.replaceAll(cn,` ${en} `);return result.replace(/\s+/g,' ').trim();}

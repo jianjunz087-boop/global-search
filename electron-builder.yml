@@ -31,6 +31,7 @@ win:
   artifactName: BAIHUA-AI-TRADE-Setup-${version}-win-x64.${ext}
 nsis:
   script: desktop/installer.nsi
+  installerLanguages: [en_US, zh_CN]
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true

@@ -1,7 +1,7 @@
 name: Windows installer and release
 on:
   push:
-    tags: ['v1.0.0-demo']
+    tags: ['v1.0.0-demo*']
   workflow_dispatch:
 permissions:
   contents: read
@@ -30,7 +30,18 @@ jobs:
       - name: Verify desktop launch and local CRM persistence on Windows
         run: node tests/desktop-smoke.cjs
       - name: Build Windows x64 installer
-        run: npx electron-builder --win --x64
+        shell: pwsh
+        run: |
+          npx electron-builder --win --x64 *> windows-build.log
+          $buildExit = $LASTEXITCODE
+          Get-Content windows-build.log | Write-Output
+          if ($buildExit -ne 0) {
+            Get-Content windows-build.log -Tail 65 | ForEach-Object {
+              $line = $_.Replace('%','%25').Replace("`r",'%0D').Replace("`n",'%0A')
+              Write-Output "::error::$line"
+            }
+            exit $buildExit
+          }
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - name: Create checksums
@@ -53,11 +64,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          gh release view v1.0.0-demo *> $null
+          gh release view "$env:RELEASE_TAG" *> $null
           if ($LASTEXITCODE -ne 0) {
-            gh release create v1.0.0-demo --target "$env:GITHUB_SHA" --title 'BAIHUA AI TRADE 1.0.0 — Windows 测试版' --prerelease --notes-file desktop/RELEASE-NOTES.md
+            gh release create "$env:RELEASE_TAG" --target "$env:GITHUB_SHA" --title 'BAIHUA AI TRADE 1.0.0 — Windows 测试版' --prerelease --notes-file desktop/RELEASE-NOTES.md
             if ($LASTEXITCODE -ne 0) { throw 'Release creation failed' }
           }
-          gh release upload v1.0.0-demo dist/windows/BAIHUA-AI-TRADE-Setup-1.0.0-win-x64.exe dist/windows/SHA256SUMS.txt --clobber
+          gh release upload "$env:RELEASE_TAG" dist/windows/BAIHUA-AI-TRADE-Setup-1.0.0-win-x64.exe dist/windows/SHA256SUMS.txt --clobber
           if ($LASTEXITCODE -ne 0) { throw 'Release upload failed' }

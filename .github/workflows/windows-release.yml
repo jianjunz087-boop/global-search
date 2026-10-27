@@ -34,7 +34,18 @@ jobs:
       - run: npm run typecheck
       - run: node desktop/prepare.mjs
       - name: Verify desktop launch and local CRM persistence on Windows
-        run: node tests/desktop-smoke.cjs
+        shell: pwsh
+        run: |
+          & node tests/desktop-smoke.cjs *> desktop-smoke.log
+          $smokeExit = $LASTEXITCODE
+          Get-Content desktop-smoke.log | Write-Output
+          if ($smokeExit -ne 0) {
+            $details = (Get-Content desktop-smoke.log -Tail 35) -join "`n"
+            $details = $details.Replace('%','%25').Replace("`r",'%0D').Replace("`n",'%0A')
+            if ($details.Length -gt 3800) { $details = $details.Substring($details.Length - 3800) }
+            Write-Output "::error::$details"
+            exit $smokeExit
+          }
       - name: Build Windows x64 installer
         shell: pwsh
         run: |

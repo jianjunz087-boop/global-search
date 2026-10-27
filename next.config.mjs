@@ -1,1 +1,1 @@
-export default {output:'standalone',serverExternalPackages:['@electric-sql/pglite'],outputFileTracingIncludes:{'/api/*':['./node_modules/@electric-sql/pglite/dist/**/*']}};
+export default {output:'standalone',serverExternalPackages:['@electric-sql/pglite'],outputFileTracingExcludes:{'/api/download/windows':['./dist/**/*']},outputFileTracingIncludes:{'/download':['./docs/index.html'],'/api/*':['./node_modules/@electric-sql/pglite/dist/**/*']}};

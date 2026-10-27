@@ -26,7 +26,11 @@ FunctionEnd
 Section "Install"
   SetShellVarContext current
   SetOutPath "$INSTDIR"
-  File /r "${PROJECT_DIR}/dist/windows/win-unpacked/*"
+  !ifdef NSIS_WIN32_MAKENSIS
+    File /r "${PROJECT_DIR}\dist\windows\win-unpacked\*"
+  !else
+    File /r "${PROJECT_DIR}/dist/windows/win-unpacked/*"
+  !endif
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   CreateDirectory "$SMPROGRAMS\BAIHUA AI TRADE"
   CreateShortcut "$SMPROGRAMS\BAIHUA AI TRADE\BAIHUA AI TRADE.lnk" "$INSTDIR\BAIHUA AI TRADE.exe"

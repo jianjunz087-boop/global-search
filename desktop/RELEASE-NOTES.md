@@ -1,6 +1,6 @@
 # BAIHUA AI TRADE — Windows 10 / 11 x64 测试版
 
-下载下方 **BAIHUA-AI-TRADE-Setup-1.0.1-win-x64.exe**，双击安装。
+下载下方 **BAIHUA-AI-TRADE-Setup-1.0.2-win-x64.exe**，双击安装。
 
 - 中英文客户开发后台、筛选、CRM 跟进、多语言开发信模板与 Excel 导出。
 - 内置 Electron、Next.js 及 PGlite 本地 PostgreSQL 引擎，无需另装数据库或 Node.js。
@@ -13,3 +13,5 @@
 SHA256SUMS.txt 用于校验安装包。此安装包由 GitHub Windows 工作流构建，发布前执行自动启动和 CRM 重启持久化检查；仍建议先在测试电脑验收。
 
 本次修复：主按钮执行真实搜索；全球 ISO 国家和地区选择（含中英文查找）；合理的 OR 查询；持久显示密钥、额度和网络错误；真实结果不被演示评分隐藏；搜索结果去重并保留已有 CRM 跟进；提供桌面内搜索密钥设置入口。
+
+1.0.2 更新：深色高对比搜索页；明确显示全部 250 个国家和地区、清除国家筛选；详情新增「查找公开 WhatsApp」，每次使用一次 SerpAPI 搜索，仅提取官网收录页面明确标注的号码并保存来源链接，支持 Excel 导出。找不到则保留空值，不推断普通电话为 WhatsApp。页脚显示版本号。

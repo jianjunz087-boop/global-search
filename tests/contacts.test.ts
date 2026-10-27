@@ -1,0 +1,4 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {extractWhatsApp} from '../lib/contacts';
+const site='https://supplier.example';
+test('only explicitly labeled international WhatsApp is extracted with official source',()=>{assert.deepEqual(extractWhatsApp([{link:site+'/contact',snippet:'WhatsApp: +44 7700 900123'}],site),{whatsapp:'447700900123',whatsappSource:site+'/contact'});assert.equal(extractWhatsApp([{link:site,snippet:'Phone: +44 7700 900123'}],site),null)});
+test('WhatsApp links accepted, other domains and invalid sources rejected',()=>{assert.equal(extractWhatsApp([{link:site+'/about',snippet:'https://wa.me/447700900123'}],site)?.whatsapp,'447700900123');for(const link of ['https://other.example/contact','https://supplier.example.evil.example','javascript:alert(1)'])assert.equal(extractWhatsApp([{link,snippet:'WhatsApp: +44 7700 900123'}],site),null);assert.equal(extractWhatsApp([],site),null)});

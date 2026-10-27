@@ -10,7 +10,9 @@
     "test": "tsx --test tests/*.test.ts",
     "typecheck": "tsc --noEmit",
     "desktop:build": "npm run build && node desktop/prepare.mjs && electron-builder --win --x64",
-    "desktop:dev": "electron desktop"
+    "desktop:dev": "electron desktop",
+    "db:migrate": "tsx --env-file-if-exists=.env.local scripts/migrate.ts",
+    "lint": "biome lint --only=correctness/noUnusedVariables --only=correctness/noUnreachable app/intelligence app/api/intelligence lib/intelligence scripts/migrate.ts tests/intelligence.test.ts"
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,7 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.6.3",
     "@playwright/test": "^1.64.1",
     "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",

@@ -1,0 +1,382 @@
+.mi {
+	--ink: #173d3c;
+	--muted: #647b7b;
+	background: #f2f6f5;
+	color: var(--ink);
+	min-height: 100vh;
+	font:
+		14px Arial,
+		sans-serif;
+	display: flex;
+}
+.mi * {
+	box-sizing: border-box;
+}
+.mi aside {
+	width: 238px;
+	flex-shrink: 0;
+	background: #103c3b;
+	color: #eef9f6;
+	padding: 30px 22px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	position: sticky;
+	top: 0;
+	height: 100vh;
+}
+.mi-logo {
+	font: 42px Georgia;
+	color: #d4b97c;
+}
+.mi-logo span {
+	font-size: 28px;
+}
+.mi aside small {
+	font-size: 10px;
+	line-height: 1.8;
+	color: #a6c6bf;
+}
+.mi nav {
+	display: grid;
+	gap: 7px;
+	margin: 25px -8px;
+	flex: 1;
+}
+.mi nav button {
+	background: transparent;
+	color: #bdd1ce;
+	border: 0;
+	text-align: left;
+	padding: 13px;
+	border-radius: 7px;
+}
+.mi nav button.active {
+	background: #2c5954;
+	color: white;
+}
+.mi nav span {
+	display: inline-block;
+	width: 28px;
+	color: #d4b97c;
+}
+.mi aside a {
+	color: #c7ddd5;
+	font-size: 12px;
+}
+.mi main {
+	max-width: 1500px;
+	width: 100%;
+	padding: 34px 40px;
+}
+.mi header,
+.mi-section {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+}
+.mi header small {
+	font-size: 10px;
+	letter-spacing: 2px;
+	color: var(--muted);
+}
+.mi h1 {
+	font-size: 32px;
+	margin: 10px 0 26px;
+	font-weight: 500;
+}
+.mi h2 {
+	font-size: 20px;
+	font-weight: 500;
+}
+.mi h3 {
+	font-size: 16px;
+}
+.mi p {
+	color: #5f7574;
+	line-height: 1.7;
+}
+.mi-banner {
+	padding: 14px 18px;
+	background: #fff5df;
+	border: 1px solid #eadab8;
+	color: #826329;
+	font-size: 12px;
+	border-radius: 6px;
+	margin: 0 0 24px;
+}
+.mi-stats {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 18px;
+	margin-bottom: 24px;
+}
+.mi article,
+.mi section {
+	background: white;
+	border: 1px solid #dce6e2;
+	border-radius: 10px;
+	padding: 24px;
+	margin-bottom: 20px;
+}
+.mi-stats article {
+	margin: 0;
+}
+.mi-stats small,
+.mi-stats span {
+	display: block;
+	font-size: 12px;
+	color: var(--muted);
+}
+.mi-stats b {
+	font-size: 36px;
+	display: block;
+	font-weight: 500;
+	margin: 16px 0;
+}
+.mi button,
+.mi-upload {
+	cursor: pointer;
+	border: 1px solid #c8d7d1;
+	border-radius: 6px;
+	padding: 10px 14px;
+	background: white;
+	color: #194c45;
+	font: inherit;
+}
+.mi button:hover {
+	background: #e9f3ed;
+}
+.mi button:disabled {
+	opacity: 0.5;
+}
+.mi input,
+.mi select,
+.mi textarea {
+	border: 1px solid #c9d8d3;
+	border-radius: 5px;
+	padding: 10px;
+	background: white;
+	color: #264844;
+	font: inherit;
+	max-width: 100%;
+}
+.mi-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 22px 0;
+}
+.mi-table {
+	overflow-x: auto;
+}
+.mi table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+	white-space: nowrap;
+}
+.mi th {
+	font-size: 11px;
+	color: var(--muted);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	background: #f6f9f7;
+}
+.mi th,
+.mi td {
+	padding: 16px 12px;
+	border-bottom: 1px solid #e8eeeb;
+}
+.mi td small {
+	display: block;
+	color: var(--muted);
+	font-size: 11px;
+	margin-top: 7px;
+}
+.mi em {
+	font-size: 10px;
+	letter-spacing: 0.5px;
+	background: #f4eedb;
+	color: #8d7334;
+	padding: 5px 8px;
+	border-radius: 4px;
+	font-style: normal;
+}
+.mi .mi-link {
+	border: 0;
+	background: none;
+	padding: 0;
+	text-align: left;
+}
+.mi-track {
+	height: 5px;
+	border-radius: 5px;
+	background: #e7efea;
+	margin-top: 9px;
+	max-width: 160px;
+}
+.mi-track i {
+	display: block;
+	background: #4d8978;
+	height: 100%;
+	border-radius: 5px;
+}
+.mi-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 20px;
+}
+.mi-empty {
+	text-align: center;
+	padding: 60px 20px;
+	color: #7b8f88;
+	background: #f7faf8;
+	border: 1px dashed #c4d5cd;
+	line-height: 2;
+}
+.mi label {
+	display: block;
+	font-size: 12px;
+	color: #55736b;
+}
+.mi label input,
+.mi label select {
+	display: block;
+	width: 100%;
+	margin-top: 6px;
+}
+.mi .mi-upload input {
+	width: 170px;
+	font-size: 10px;
+}
+.mi .mi-setting {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 500px;
+	margin: 10px 0;
+}
+.mi .mi-setting input {
+	width: 85px;
+}
+.mi textarea {
+	width: 100%;
+	min-height: 100px;
+}
+.mi-modal {
+	position: fixed;
+	inset: 0;
+	background: #102f35aa;
+	z-index: 99;
+	overflow: auto;
+	padding: 40px 20px;
+	display: grid;
+	place-items: start center;
+}
+.mi-modal form,
+.mi-modal > section {
+	background: white;
+	padding: 28px;
+	border-radius: 12px;
+	width: min(850px, 100%);
+	max-height: 90vh;
+	overflow: auto;
+}
+.mi-modal button {
+	margin: 10px 10px 0 0;
+}
+.mi-error {
+	padding: 16px;
+	background: #ffe5e5;
+	color: #a02525;
+}
+.mi footer {
+	text-align: center;
+	color: #879c94;
+	font-size: 11px;
+	margin: 30px;
+}
+.mi a {
+	color: #247463;
+}
+@media (max-width: 1000px) {
+	.mi main {
+		padding: 22px;
+	}
+	.mi-stats {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.mi aside {
+		width: 190px;
+	}
+}
+@media (max-width: 700px) {
+	.mi {
+		display: block;
+	}
+	.mi aside {
+		width: auto;
+		height: auto;
+		position: static;
+		padding: 16px;
+	}
+	.mi aside nav {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0;
+		gap: 2px;
+	}
+	.mi aside nav button {
+		font-size: 12px;
+		padding: 8px;
+	}
+	.mi aside > small,
+	.mi-logo {
+		display: none;
+	}
+	.mi main {
+		padding: 16px;
+	}
+	.mi-grid {
+		grid-template-columns: 1fr;
+	}
+	.mi-stats {
+		gap: 8px;
+	}
+	.mi article,
+	.mi section {
+		padding: 16px;
+	}
+	.mi h1 {
+		font-size: 26px;
+	}
+}
+@media print {
+	body * {
+		visibility: hidden;
+	}
+	.mi #mi-report,
+	.mi #mi-report * {
+		visibility: visible;
+	}
+	.mi #mi-report {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		color: black;
+	}
+	.mi #mi-report button {
+		display: none;
+	}
+}
+/* Isolate the research workspace from the legacy CRM's global dark theme. */
+.mi header{background:transparent;height:auto;min-height:76px;padding:0;border:0;color:var(--ink)}
+.mi nav{align-content:start}
+.mi td{font-size:13px;color:var(--ink)}
+.mi td button{font-size:13px}
+.mi input[type=checkbox]{appearance:auto;background:white}
+.mi #mi-report{overflow-wrap:anywhere}

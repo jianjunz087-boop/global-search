@@ -61,3 +61,7 @@ Real discovery now uses provider pagination (`start=(page-1)*10`) and enables Ne
 The country selector always contains all 250 countries and territories plus All countries. A separate browsable directory filters names in Chinese, English or by code. The whole workspace now uses dark green surfaces, with a prominent version marker and release banner. The WhatsApp column offers lookup directly in the list, distinguishes unchecked records and checked records with no public number, and links to the number's official source. Primary organic-result snippets can also supply explicitly labeled international WhatsApp numbers.
 
 The legacy local 1.0.0 installer streaming path has been removed. The in-app download page redirects to the live public download page. Windows release CI now runs the actual NSIS installer and launches its installed executable to check version, computed theme color, all 250 countries, local pagination, CRM persistence, and synthetic public-contact UI handling before publishing. This verifies packaging, not live SerpAPI account access.
+
+## Global Eyelash Market Intelligence MVP
+
+Open `/intelligence` for the new market research workspace. See [setup, environment variables, validation and deployment](docs/INTELLIGENCE.md). The existing CRM remains available at `/`.

@@ -1,0 +1,1 @@
+Install Node.js 24 LTS first. Extract the whole ZIP, then double-click START-WINDOWS.bat. Wait for Ready and open http://localhost:3000/intelligence. Keep the command window open. First startup downloads dependencies. Market scores are DEMO; no real contacts are seeded into the intelligence module.

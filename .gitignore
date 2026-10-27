@@ -10,3 +10,5 @@ playwright-report/
 dist/
 
 desktop-runtime/
+
+.baihua-data/

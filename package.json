@@ -12,7 +12,7 @@
     "desktop:build": "npm run build && node desktop/prepare.mjs && electron-builder --win --x64",
     "desktop:dev": "electron desktop",
     "db:migrate": "tsx --env-file-if-exists=.env.local scripts/migrate.ts",
-    "lint": "biome lint --only=correctness/noUnusedVariables --only=correctness/noUnreachable app/intelligence app/api/intelligence lib/intelligence scripts/migrate.ts tests/intelligence.test.ts"
+    "lint": "biome lint --only=correctness/noUnusedVariables --only=correctness/noUnreachable app/intelligence app/api/intelligence lib/intelligence scripts/migrate.ts tests/intelligence.test.ts tests/live-sources.test.ts tests/live-db.test.ts tests/browser/live-sources.spec.ts"
   },
   "repository": {
     "type": "git",

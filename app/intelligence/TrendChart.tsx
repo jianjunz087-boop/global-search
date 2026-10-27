@@ -3,6 +3,7 @@ type Point = Pick<Observation, "country" | "product" | "unit" | "value"> & {
 	period: string;
 	name: string;
 	method: string;
+	sourceId?: string;
 };
 /** Keep differently defined metrics and countries on separate axes. */
 export default function TrendChart({
@@ -21,11 +22,13 @@ export default function TrendChart({
 				const sorted = [...points].sort((a, b) =>
 					a.period.localeCompare(b.period),
 				);
-				const max = Math.max(1, ...sorted.map((o) => o.value));
+				const max = sorted.every((o) => o.sourceId === "google-trends")
+					? 100
+					: Math.max(1, ...sorted.map((o) => o.value));
 				return (
 					<figure key={label}>
 						<figcaption>
-							{label} · User-supplied observations, unverified
+							{label} · Source-linked observations; see collection method below
 						</figcaption>
 						<svg
 							viewBox="0 0 650 180"

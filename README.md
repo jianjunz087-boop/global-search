@@ -65,3 +65,7 @@ The legacy local 1.0.0 installer streaming path has been removed. The in-app dow
 ## Global Eyelash Market Intelligence MVP
 
 Open `/intelligence` for the new market research workspace. See [setup, environment variables, validation and deployment](docs/INTELLIGENCE.md). The existing CRM remains available at `/`.
+
+### Configure live sources on Windows
+
+Double-click `CONFIGURE-API.bat`, set `SERPAPI_API_KEY` in your private `.env.local`, save and restart `START-WINDOWS.bat`. Then use **Data Sources → Collect real data** for Google Trends search-interest indices or broad-category UN Comtrade context. See [中文配置步骤与数据口径](docs/DATA-SOURCES-WINDOWS.md). A present key is not verified access; no real sales or market totals are inferred. Live provider verification remains pending until a successful local request.

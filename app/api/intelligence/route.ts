@@ -1,3 +1,4 @@
+import { sourceStates } from "@/lib/intelligence/collection";
 import { store } from "@/lib/intelligence/store";
 import { domain, products } from "@/lib/intelligence/model";
 export async function GET() {
@@ -11,37 +12,8 @@ export async function GET() {
 				weights: [25, 20, 15, 20, 10, 10],
 				reminders: [],
 			},
-			sources: [
-				{
-					name: "SerpAPI",
-					configured: !!process.env.SERPAPI_API_KEY,
-					url: "https://serpapi.com/",
-					method: "User-initiated public search via existing CRM",
-					range: "Per query",
-					restriction: "Provider terms and quota; company location unverified",
-					lastCollected: null,
-				},
-				{
-					name: "UN Comtrade",
-					configured: false,
-					url: "https://comtradeplus.un.org/",
-					method: "Not connected",
-					range: "Unknown",
-					restriction:
-						"HS headings may include unrelated products; no eyelash volume inferred",
-					lastCollected: null,
-				},
-				{
-					name: "Google Trends",
-					configured: false,
-					url: "https://trends.google.com/",
-					method: "Not connected",
-					range: "Unknown",
-					restriction:
-						"Relative interest is not sales; licensed adapter required",
-					lastCollected: null,
-				},
-			],
+			sources: sourceStates(r.rows, !!process.env.SERPAPI_API_KEY?.trim()),
+			trades: r.rows.filter((x) => x.kind === "trade").map((x) => x.data),
 			observations: r.rows
 				.filter((x) => x.kind === "observation")
 				.map((x) => x.data),

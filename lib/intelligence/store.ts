@@ -16,5 +16,8 @@ export async function store() {
 	await db.query(
 		"CREATE UNIQUE INDEX IF NOT EXISTS intelligence_buyer_domain ON intelligence_records ((data->>'companyDomain')) WHERE kind='buyer'",
 	);
+	await db.query(
+		"CREATE TABLE IF NOT EXISTS intelligence_collection_guard (id text PRIMARY KEY, requested_at timestamptz NOT NULL)",
+	);
 	return db;
 }

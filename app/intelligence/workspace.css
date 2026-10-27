@@ -374,9 +374,28 @@
 	}
 }
 /* Isolate the research workspace from the legacy CRM's global dark theme. */
-.mi header{background:transparent;height:auto;min-height:76px;padding:0;border:0;color:var(--ink)}
-.mi nav{align-content:start}
-.mi td{font-size:13px;color:var(--ink)}
-.mi td button{font-size:13px}
-.mi input[type=checkbox]{appearance:auto;background:white}
-.mi #mi-report{overflow-wrap:anywhere}
+.mi header {
+	background: transparent;
+	height: auto;
+	min-height: 76px;
+	padding: 0;
+	border: 0;
+	color: var(--ink);
+}
+.mi nav {
+	align-content: start;
+}
+.mi td {
+	font-size: 13px;
+	color: var(--ink);
+}
+.mi td button {
+	font-size: 13px;
+}
+.mi input[type="checkbox"] {
+	appearance: auto;
+	background: white;
+}
+.mi #mi-report {
+	overflow-wrap: anywhere;
+}

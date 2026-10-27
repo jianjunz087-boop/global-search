@@ -11,6 +11,8 @@ import {
 } from "@/lib/intelligence/model";
 import "./workspace.css";
 import TrendChart from "./TrendChart";
+import LiveSources from "./LiveSources";
+import type { SourceState, TradeContext } from "@/lib/intelligence/live-model";
 const tabs = [
 	"Dashboard",
 	"Markets",
@@ -51,6 +53,9 @@ const buyerFields = [
 	"note",
 ] as const;
 type Observation = {
+	sourceId?: string;
+	classification?: string;
+	periodLabel?: string;
 	id: string;
 	name: string;
 	country: string;
@@ -69,15 +74,8 @@ type Data = {
 	markets: Market[];
 	buyers: Buyer[];
 	settings: { weights: number[]; reminders: string };
-	sources: {
-		name: string;
-		configured: boolean;
-		url: string;
-		method: string;
-		range: string;
-		restriction: string;
-		lastCollected: string | null;
-	}[];
+	sources: SourceState[];
+	trades: TradeContext[];
 };
 const emptyBuyer = () =>
 	Object.fromEntries(
@@ -310,14 +308,19 @@ export default function Intelligence() {
 										[data.markets.length, "Markets in directory"],
 										[data.buyers.length, "Source-linked B2B leads"],
 										[products.length, "Product categories"],
-										[0, "Verified market observations"],
+										[
+											data.observations.filter(
+												(o) => o.sourceId === "google-trends",
+											).length,
+											"API trend observations",
+										],
 									].map(([n, label]) => (
 										<article key={label}>
 											<small>{label}</small>
 											<b>{n}</b>
 											<span>
 												Current database ·{" "}
-												{label === "Verified market observations"
+												{label === "API trend observations"
 													? "External feeds pending"
 													: "MVP"}
 											</span>
@@ -592,8 +595,11 @@ export default function Intelligence() {
 												{o.period} · {o.country} · {o.value} {o.unit}
 											</b>
 											<p>
-												{o.name} · user-supplied observation, unverified ·
-												collected {o.collectedAt}
+												{o.name} ·{" "}
+												{o.sourceId === "google-trends"
+													? "API search-interest index · not sales"
+													: "user-supplied observation, unverified"}{" "}
+												· collected {o.collectedAt}
 											</p>
 											<a href={o.sourceUrl} target="_blank" rel="noreferrer">
 												Source ↗
@@ -610,8 +616,10 @@ export default function Intelligence() {
 										</article>
 									))}
 								<div className="mi-empty">
-									External feed not connected for {source}.<br />
-									Connect a licensed source before rendering a trend chart.
+									API observations matching {source} appear above when
+									available.
+									<br />
+									Use Data Sources to collect a supported API trend series.
 									Search interest and public prices must not be presented as
 									sales.
 								</div>
@@ -922,8 +930,8 @@ export default function Intelligence() {
 										<h3>{cn ? "产品与竞品" : "Products and competitors"}</h3>
 										<p>
 											{cn
-												? "暂无经验证的趋势或竞品观测。"
-												: "External feeds are not connected. Manually recorded observations are listed below."}
+												? "API采集及人工记录见下方，搜索热度不代表销量。"
+												: "API-collected and manually recorded observations are listed below, each with its source and method. Search interest is not sales."}
 										</p>
 										<h3>
 											{cn ? "企业客户及来源" : "B2B companies and sources"}
@@ -932,7 +940,18 @@ export default function Intelligence() {
 											<p key={o.id}>
 												{o.country} · {o.product} · {o.period}: {o.value}{" "}
 												{o.unit} · {o.sourceUrl} · {o.method} · {o.limitations}{" "}
-												· user supplied
+												·{" "}
+												{o.sourceId === "google-trends"
+													? "API search index, not sales"
+													: "user supplied"}
+											</p>
+										))}
+										{data.trades.map((t) => (
+											<p key={t.id}>
+												UN Comtrade · {t.country} · {t.year} · HS {t.hsCode} (
+												{t.classification}) · {t.value} USD · {t.description} ·{" "}
+												{t.sourceUrl} · collected {t.collectedAt} ·{" "}
+												{t.limitations}
 											</p>
 										))}
 										{data.competitors.map((c) => (
@@ -976,40 +995,14 @@ export default function Intelligence() {
 							</section>
 						)}
 						{tab === "Data Sources" && (
-							<section>
-								<h2>Source transparency & API configuration</h2>
-								<p>
-									No background search or collection has been performed by this
-									module.
-								</p>
-								{data.sources.map((s) => (
-									<article key={s.name}>
-										<div className="mi-section">
-											<h3>{s.name}</h3>
-											<em>
-												{s.configured
-													? "Key present · request not verified"
-													: "Not configured"}
-											</em>
-										</div>
-										<a href={s.url} target="_blank" rel="noreferrer">
-											{s.url}
-										</a>
-										<p>
-											Method: {s.method} · Period: {s.range} · Last collected:{" "}
-											{s.lastCollected ?? "Never"}
-										</p>
-										<p>{s.restriction}</p>
-									</article>
-								))}
-								<p>
-									SerpAPI: set SERPAPI_API_KEY in server environment settings,
-									restart, and use the existing discovery CRM. Keys never enter
-									browser code. UN Comtrade / Trends adapters are not
-									implemented; keys alone do not enable them.
-								</p>
-							</section>
+							<LiveSources
+								sources={data.sources}
+								trades={data.trades}
+								onCollected={load}
+								cn={cn}
+							/>
 						)}
+
 						{tab === "Settings" && (
 							<section>
 								<h2>Opportunity model</h2>

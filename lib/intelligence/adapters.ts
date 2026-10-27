@@ -43,7 +43,6 @@ export class UnconfiguredAdapter implements SourceAdapter {
 		throw new Error(`${this.id} is not configured; no collection performed`);
 	}
 }
-export const adapters: SourceAdapter[] = [
-	new UnconfiguredAdapter("comtrade"),
-	new UnconfiguredAdapter("google-trends"),
-];
+// Legacy placeholders remain available for unsupported-source tests.
+// Operational adapters are registered in live.ts and invoked by /api/intelligence/collect.
+export const adapters: SourceAdapter[] = [];

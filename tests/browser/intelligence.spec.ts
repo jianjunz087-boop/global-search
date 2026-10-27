@@ -111,14 +111,12 @@ test("Excel round trip, bulk qualification, settings, country creation and sourc
 	expect(xlsx.suggestedFilename()).toBe("b2b-leads.xlsx");
 	const path = await xlsx.path();
 	expect(path).toBeTruthy();
-	await page
-		.locator("input[type=file]")
-		.setInputFiles({
-			name: "roundtrip.xlsx",
-			mimeType:
-				"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-			buffer: await readFile(path!),
-		});
+	await page.locator("input[type=file]").setInputFiles({
+		name: "roundtrip.xlsx",
+		mimeType:
+			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		buffer: await readFile(path!),
+	});
 	await expect(page.getByRole("status")).toContainText("duplicate");
 	const check = page.getByRole("checkbox").first();
 	await check.check();
@@ -160,14 +158,15 @@ test("Excel round trip, bulk qualification, settings, country creation and sourc
 		.getByRole("button", { name: "+ Add public brand observation" })
 		.click();
 	const record = page.getByRole("dialog", { name: "Source observation" });
-	await record
-		.getByLabel("name", { exact: true })
-		.fill("TEST BRAND — not real");
+	const brandName = `TEST BRAND ${Date.now()} — not real`;
+	await record.getByLabel("name", { exact: true }).fill(brandName);
 	await record.getByLabel("country", { exact: true }).fill("Russia");
 	await record
 		.getByLabel("sourceUrl", { exact: true })
 		.fill("https://brand-test.example");
 	await record.getByRole("button", { name: "Save observation" }).click();
 	await expect(record).not.toBeVisible();
-	await expect(page.getByText("TEST BRAND — not real · Russia")).toBeVisible();
+	await expect(
+		page.getByText(`${brandName} · Russia`, { exact: true }),
+	).toBeVisible();
 });

@@ -33,3 +33,9 @@ No login or multi-tenant access control is included: do not expose this prototyp
 Local data stays under the current Windows user's application-data directory, in `postgres-data`. Uninstallation retains data. Open the application menu to view the data directory or configure a SerpAPI key. The key is encrypted using Electron safeStorage (Windows DPAPI); never bundle a key. Search still requires Internet access and a valid SerpAPI account. Website/email contacts are not invented. The installer is unsigned; Windows may display an unknown-publisher warning. Only Linux service/browser checks have been executed; Windows installation and launch require a Windows acceptance check.
 
 Build preparation explicitly strips `.env*` files from the shipped server. No cloud database credentials are included. Keep `dist/` and secrets out of source control.
+
+## Download page
+
+`/download` serves the bilingual desktop download page. The local server streams an existing installer through `/api/download/windows` with attachment headers, and `?checksum=1` provides a computed SHA-256 file. Override DESKTOP_INSTALLER_PATH only with a server-managed path; request parameters cannot choose filesystem paths. Installers are excluded from Next.js dependency tracing.
+
+`docs/index.html` is also a self-contained static GitHub Pages download page. It checks public GitHub Releases and enables download only when a published release contains the Windows installer. Enable Settings → Pages → Build and deployment → Source: GitHub Actions once as repository administrator, then run the Publish download page workflow. The cloud session cannot enable this administrator setting with its current credentials. Publishing the page does not itself publish an installer.

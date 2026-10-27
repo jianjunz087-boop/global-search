@@ -25,3 +25,14 @@ jobs:
           path: docs
       - uses: actions/deploy-pages@v4
         id: deployment
+      - name: Verify public download page
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          for attempt in {1..12}; do
+            if curl -fsSL "$PAGE_URL?build=$GITHUB_SHA" -o /tmp/download-page.html && rg -q 'v1.0.0-demo.7' /tmp/download-page.html && rg -q 'id="download"' /tmp/download-page.html; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1

@@ -6,13 +6,13 @@
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
-    "start": "next start --hostname 0.0.0.0",
+    "start": "node scripts/start-server.mjs",
     "test": "tsx --test tests/*.test.ts",
     "typecheck": "tsc --noEmit",
     "desktop:build": "npm run build && node desktop/prepare.mjs && electron-builder --win --x64",
     "desktop:dev": "electron desktop",
     "db:migrate": "tsx --env-file-if-exists=.env.local scripts/migrate.ts",
-    "lint": "biome lint --only=correctness/noUnusedVariables --only=correctness/noUnreachable app/intelligence app/api/intelligence lib/intelligence scripts/migrate.ts tests/intelligence.test.ts tests/live-sources.test.ts tests/live-db.test.ts tests/browser/live-sources.spec.ts"
+    "lint": "biome lint --only=correctness/noUnusedVariables --only=correctness/noUnreachable app/intelligence app/api/intelligence lib/intelligence scripts/migrate.ts tests/intelligence.test.ts tests/live-sources.test.ts tests/live-db.test.ts tests/browser/live-sources.spec.ts lib/prospecting components/prospecting app/api/prospecting tests/prospecting.test.ts tests/prospecting-db.test.ts tests/browser/prospecting.spec.ts scripts/ensure-dependencies.cjs scripts/configure-env.cjs scripts/start-server.mjs tests/env-helper.test.ts"
   },
   "repository": {
     "type": "git",
@@ -28,13 +28,17 @@
   "homepage": "https://github.com/jianjunz087-boop/global-search#readme",
   "dependencies": {
     "@electric-sql/pglite": "^0.5.12",
+    "cheerio": "^1.2.0",
     "exceljs": "^4.4.0",
     "i18n-iso-countries": "^7.14.0",
+    "ipaddr.js": "^2.5.0",
+    "libphonenumber-js": "^1.13.15",
     "lucide-react": "^1.61.0",
     "next": "^16.4.3",
     "pg": "^8.23.1",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "robots-parser": "^3.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.3",

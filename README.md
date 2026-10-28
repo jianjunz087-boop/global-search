@@ -69,3 +69,7 @@ Open `/intelligence` for the new market research workspace. See [setup, environm
 ### Configure live sources on Windows
 
 Double-click `CONFIGURE-API.bat`, set `SERPAPI_API_KEY` in your private `.env.local`, save and restart `START-WINDOWS.bat`. Then use **Data Sources → Collect real data** for Google Trends search-interest indices or broad-category UN Comtrade context. See [中文配置步骤与数据口径](docs/DATA-SOURCES-WINDOWS.md). A present key is not verified access; no real sales or market totals are inferred. Live provider verification remains pending until a successful local request.
+
+## Google/Yandex B2B and public-contact upgrade
+
+The existing root discovery page now includes Google/Yandex parallel search, durable task/cache/error traces, source-aware deduplication, public WhatsApp/contact research, manual ownership review, B2B evidence scoring, company dossiers, country trade context and richer CSV/Excel exports. Original CRM records and APIs remain compatible. Read [upgrade, schema migration, API setup and deployment limitations](docs/B2B-UPGRADE.md) before upgrading a real customer database. Windows startup refreshes dependencies when the lockfile changes; it does not reset data. Real account access is verified only after a successful query with your local/server key.

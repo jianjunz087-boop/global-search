@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-10-28T00:55:01.494Z",
+  "environment": "Isolated cloud acceptance database; no real provider credential configured",
+  "applicationHTTPStatus": 202,
+  "query": {
+    "engine": "both",
+    "country": "Russia",
+    "keyword": "ресницы оптом WhatsApp",
+    "limit": 5,
+    "language": "auto",
+    "page": 1
+  },
+  "taskState": "failed",
+  "providerRequestsAttempted": 0,
+  "errors": [
+    {
+      "code": "MISSING_API_KEY",
+      "engine": "google",
+      "message": "google: configure the server-side SerpAPI credential and restart the application"
+    },
+    {
+      "code": "MISSING_API_KEY",
+      "engine": "yandex",
+      "message": "yandex: configure the server-side SerpAPI credential and restart the application"
+    }
+  ],
+  "resultCount": 0,
+  "verdict": "BLOCKED: this is an actual application preflight, not a successful provider search or a real-company result sample. No company/contact/import data fabricated."
+}

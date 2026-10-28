@@ -1,13 +1,20 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-if not exist ".env.local" type nul > ".env.local"
-findstr /R /C:"^SERPAPI_API_KEY=" ".env.local" >nul 2>nul
+for /d %%D in ("%~dp0node-v24*-win-x64") do if exist "%%~fD\node.exe" set "PATH=%%~fD;%PATH%"
+where node >nul 2>nul
 if errorlevel 1 (
- echo.>> ".env.local"
- echo SERPAPI_API_KEY=>> ".env.local"
+ echo Node runtime not found. Keep the complete portable Node folder next to this file.
+ pause
+ exit /b 1
 )
-echo Put your own API key after SERPAPI_API_KEY= in the editor.
-echo Save the file. Close and restart START-WINDOWS.bat afterwards.
+node scripts\configure-env.cjs
+if errorlevel 1 (
+ pause
+ exit /b 1
+)
+echo Put your own key after SERPAPI_API_KEY= in the editor.
+echo Optional YANDEX_SERPAPI_KEY is a separate SerpAPI credential; leave empty to reuse the existing key.
+echo Save. Close and restart START-WINDOWS.bat afterwards.
 echo Do not send your key to anyone or commit .env.local to Git.
 notepad "%~dp0.env.local"

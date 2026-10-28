@@ -14,13 +14,12 @@ if errorlevel 1 (
 )
 set "DESKTOP_DATA_DIR=%LOCALAPPDATA%\BaihuaIntelligence"
 if not exist "%DESKTOP_DATA_DIR%" mkdir "%DESKTOP_DATA_DIR%"
-if not exist node_modules (
- call npm.cmd ci
- if errorlevel 1 goto failed
-)
+node scripts\ensure-dependencies.cjs
+if errorlevel 1 goto failed
 call npm.cmd run db:migrate
 if errorlevel 1 goto failed
-echo Open http://localhost:3000/intelligence after Ready appears.
+echo Open http://localhost:3000/ after Ready appears for B2B discovery.
+echo Market Intelligence is at http://localhost:3000/intelligence.
 echo Keep this window open while using the application.
 call npm.cmd run dev
 if errorlevel 1 goto failed

@@ -475,6 +475,19 @@ export default function DiscoveryControls({
 								{task.createdAt} · API attempts {task.usage} · cache{" "}
 								{task.cacheHit ? "yes" : "no"}
 							</p>
+							<p>
+								{t(
+									"Eyelash relevance required. China seller evidence and supplier marketplaces excluded. Unknown origin still needs verification.",
+									"仅保留有睫毛业务证据的结果；过滤中国卖家证据及供应商平台。所在地未知仍需核实。",
+								)}
+							</p>
+							{Array.isArray(task.result?.rejected) &&
+								(task.result!.rejected as any[]).map((item, i) => (
+									<p key={`rejected-${i}`}>
+										Filtered / 已过滤：{item.title} · {item.reasons.join(", ")}{" "}
+										· {item.url}
+									</p>
+								))}
 							{Array.isArray(task.result?.resources) &&
 								(task.result!.resources as any[]).map((source, i) => (
 									<p key={i}>

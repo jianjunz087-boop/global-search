@@ -1,3 +1,4 @@
+import { qualifyBusiness } from "./qualification";
 import {
 	extractPublicContacts,
 	scopeContact,
@@ -229,6 +230,7 @@ export async function persistDiscovery(
 		let added = 0,
 			merged = 0,
 			excluded = 0;
+		const rejected: { url: string; title: string; reasons: string[] }[] = [];
 		for (const source of items) {
 			if (source.resourceOnly) {
 				await c.query(
@@ -238,6 +240,16 @@ export async function persistDiscovery(
 						JSON.stringify(source),
 					],
 				);
+				continue;
+			}
+			const qualification = qualifyBusiness(source);
+			if (!qualification.accepted) {
+				excluded++;
+				rejected.push({
+					url: source.url,
+					title: source.title,
+					reasons: qualification.reasons,
+				});
 				continue;
 			}
 			const temporary: Lead = {
@@ -301,6 +313,7 @@ export async function persistDiscovery(
 		return {
 			ids: [...ids],
 			resources: items.filter((s) => s.resourceOnly),
+			rejected,
 			added,
 			merged,
 			excluded,

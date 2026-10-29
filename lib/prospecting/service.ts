@@ -212,6 +212,9 @@ async function runTask(task: SearchTask) {
 				existing: saved.ids.length - saved.added,
 				rawCount: sources.length,
 				resources: saved.resources,
+				rejected: saved.rejected,
+				qualificationPolicy:
+					"eyelash-business-v1; China seller evidence excluded; unknown origin is not verified foreign",
 			};
 		} else if (lead) {
 			const contacts = contactsFromSources(

@@ -1,3 +1,4 @@
+import { discoveryExclusions } from "./qualification";
 import { countryFor } from "../countries";
 import { normalizeKeyword } from "../keywords";
 import type { DiscoveryQuery } from "./types";
@@ -136,7 +137,17 @@ export function discoveryText(
 	const targets = q.type
 		? `(${q.type} OR ${business[q.language] ?? business.en})`
 		: (business[q.language] ?? business.en);
-	return [term, category, targets, q.country, scope].filter(Boolean).join(" ");
+	return [
+		term,
+		category,
+		`(eyelash OR lashes OR ресницы OR rzęsy OR kirpik)`,
+		targets,
+		q.country,
+		scope,
+		discoveryExclusions,
+	]
+		.filter(Boolean)
+		.join(" ");
 }
 export function suggestedQueries(country: string) {
 	const lang = suggestedLanguage(country);
